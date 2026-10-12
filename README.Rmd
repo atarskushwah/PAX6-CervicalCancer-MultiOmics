@@ -1,0 +1,27 @@
+# PAX6 Transcriptomic Analysis in Cervical Cancer (TCGA-CESC)
+
+This repository contains the R code used to perform the transcriptomic correlation analysis for the manuscript: **"Integrative Multi-Omics and Clinical Validation of PAX6 as a Biomarker Associated with HPV Infection and Relapse-Prone Cervical Cancer."**
+
+## Overview
+The provided R script (`PAX6_CESC_Analysis.R`) automates the following pipeline:
+1. Downloads Level 3 RNA-sequencing data for the TCGA-CESC primary tumor cohort via the NCI Genomic Data Commons API.
+2. Cleans and pre-processes the expression matrix (log2(TPM+1)).
+3. Performs Spearman and Pearson correlation analyses between PAX6 and developmental regulators (SOX1, SOX2, NEUROG2, SIX3).
+4. Applies Benjamini-Hochberg False Discovery Rate (FDR) corrections.
+5. Generates publication-quality scatter plots and a co-expression heatmap.
+
+## Requirements
+To run this pipeline, you will need R installed along with the following packages:
+- `TCGAbiolinks`
+- `SummarizedExperiment`
+- `tidyverse`
+- `patchwork`
+- `ggcorrplot`
+- `car`
+- `broom`
+
+## Usage
+Simply run the complete `PAX6_CESC_Analysis.R` script in your R environment (e.g., RStudio). The script will automatically fetch the data, execute the statistical tests, and save the output tables and high-resolution figures directly to your working directory.
+
+## Author
+Dr. Atar Singh Kushwah 
