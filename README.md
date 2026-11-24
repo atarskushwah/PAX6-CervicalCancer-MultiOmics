@@ -1,10 +1,10 @@
-# PAX6 Cervical Cancer — Five-Gene Co-expression Analysis
+# PAX6 Cervical Cancer — Multi-Omics and Five-Gene Co-expression Analysis
 
 Reproducible R workflow for analysing the transcriptomic co-expression of **PAX6 and four selected developmental regulators** in The Cancer Genome Atlas cervical squamous cell carcinoma and endocervical adenocarcinoma cohort (TCGA-CESC).
 
 This repository contains the expression matrix, aligned sample manifest, one integrated R analysis script, and documentation required to reproduce the five-gene co-expression analysis and its associated statistical outputs.
 
-## Research objective
+> **Revised manuscript figure mapping (24 November 2026):** The R script preserves its original generated filenames (`Figure5`, `Figure6` and `Table4`) for reproducibility. In the revised manuscript these correspond, respectively, to **main Figure 4**, **Supplementary Figure S2** and **main Table 3**. Enrichr/STRING analyses are displayed as **Supplementary Figure S1**. See [SUPPLEMENTARY_FIGURES.md](SUPPLEMENTARY_FIGURES.md) and the [readable S1 annotation schematic](figures/Supplementary_Figure_S1_Annotations_Schematic.svg). The schematic's STRING panel is a simplified representation, not the source network topology.\n\n## Research objective
 
 The objective of this analysis was to investigate pairwise transcriptomic co-expression among PAX6 and four selected developmental regulators:
 
