@@ -5,9 +5,12 @@
 #   Reproduce the five-gene Spearman co-expression analysis, Figure 5,
 #   Figure 6, Table 4, and the associated sensitivity analyses.
 #
-# Required input files (kept locally; not committed to the public repository)
-#   data/TCGA_304_FiveGene_log2TPM.csv
-#   data/TCGA_304_Aligned_Manifest.csv
+# Required input files (included at repository root; local data/ is also supported)
+#   TCGA_304_FiveGene_log2TPM.csv
+#   TCGA_304_Aligned_Manifest.csv
+#
+# The script checks the repository root first, then data/. Explicit paths can
+# be supplied with PAX6_EXPRESSION_FILE and PAX6_MANIFEST_FILE environment variables.
 #
 # Expression input is ALREADY on the log2(TPM + 1) scale. This script does
 # NOT transform it again.
@@ -21,14 +24,20 @@
 # ============================================================================
 
 # ------------------------------ USER SETTINGS -------------------------------
-EXPRESSION_FILE <- Sys.getenv(
-  "PAX6_EXPRESSION_FILE",
-  unset = file.path("data", "TCGA_304_FiveGene_log2TPM.csv")
-)
-MANIFEST_FILE <- Sys.getenv(
-  "PAX6_MANIFEST_FILE",
-  unset = file.path("data", "TCGA_304_Aligned_Manifest.csv")
-)
+resolve_input_path <- function(env_var, filename) {
+  override <- Sys.getenv(env_var, unset = "")
+  if (nzchar(override)) return(override)
+
+  candidates <- c(filename, file.path("data", filename))
+  existing <- candidates[file.exists(candidates)]
+  if (length(existing) > 0L) return(existing[1L])
+
+  # Return the root-level candidate so the validation below reports a clear error.
+  candidates[1L]
+}
+
+EXPRESSION_FILE <- resolve_input_path("PAX6_EXPRESSION_FILE", "TCGA_304_FiveGene_log2TPM.csv")
+MANIFEST_FILE <- resolve_input_path("PAX6_MANIFEST_FILE", "TCGA_304_Aligned_Manifest.csv")
 
 EXPECTED_N <- 304L
 BOOTSTRAP_REPLICATES <- 5000L
@@ -84,16 +93,16 @@ suppressPackageStartupMessages({
 if (!file.exists(EXPRESSION_FILE)) {
   stop(
     "Expression matrix not found: ", EXPRESSION_FILE,
-    "\nPlace TCGA_304_FiveGene_log2TPM.csv in the local data/ folder, or set ",
-    "PAX6_EXPRESSION_FILE to its path.",
+    "\nPlace TCGA_304_FiveGene_log2TPM.csv in the repository root or local data/ folder, ",
+    "or set PAX6_EXPRESSION_FILE to its path.",
     call. = FALSE
   )
 }
 if (!file.exists(MANIFEST_FILE)) {
   stop(
     "Aligned manifest not found: ", MANIFEST_FILE,
-    "\nPlace TCGA_304_Aligned_Manifest.csv in the local data/ folder, or set ",
-    "PAX6_MANIFEST_FILE to its path.",
+    "\nPlace TCGA_304_Aligned_Manifest.csv in the repository root or local data/ folder, ",
+    "or set PAX6_MANIFEST_FILE to its path.",
     call. = FALSE
   )
 }

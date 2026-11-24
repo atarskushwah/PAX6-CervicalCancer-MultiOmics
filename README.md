@@ -43,14 +43,10 @@ Data source: [NCI Genomic Data Commons — TCGA-CESC](https://portal.gdc.cancer.
 
 ```text
 PAX6-CervicalCancer-MultiOmics/
-│
 ├── README.md
-│
 ├── PAX6_Coexpression_Analysis.R
-│
-└── data/
-    ├── TCGA_304_FiveGene_log2TPM.csv
-    └── TCGA_304_Aligned_Manifest.csv
+├── TCGA_304_FiveGene_log2TPM.csv
+└── TCGA_304_Aligned_Manifest.csv
 ```
 
 The R script automatically creates the following output directories when executed:
@@ -309,15 +305,16 @@ Base R functions are used for correlation calculations, multiple-testing correct
 git clone https://github.com/atarskushwah/PAX6-CervicalCancer-MultiOmics.git
 ```
 
-### Step 2. Set up the input directory
+### Step 2. Confirm the input files
 
-Ensure the repository contains:
+Both required CSV files are already included at the repository root, so no manual folder setup is required after cloning.
 
-```text
-data/
-├── TCGA_304_FiveGene_log2TPM.csv
-└── TCGA_304_Aligned_Manifest.csv
-```
+The R script searches for each input file in this order:
+
+1. The repository root.
+2. The local `data/` folder.
+
+If the same filename exists in both locations, the root-level file is used. You can override either path by setting `PAX6_EXPRESSION_FILE` or `PAX6_MANIFEST_FILE` to the full or relative path of the relevant CSV before running the script.
 
 ### Step 3. Open R or RStudio at the repository root
 
